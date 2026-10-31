@@ -299,6 +299,29 @@ class CalendarEventViewSet(viewsets.ModelViewSet):
         result = ReminderSchedulerService.run_all()
         return Response(result)
 
+# ================= NOTIFICATION & AUDIT VIEWSETS =================
+class NotificationViewSet(viewsets.ModelViewSet):
+    serializer_class = NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if getattr(user, 'is_staff', False) or getattr(user, 'role', '') in ['ADMIN', 'SUPERADMIN']:
+            return Notification.objects.all()
+        return Notification.objects.filter(user=user)
+
+    @action(detail=True, methods=['post'])
+    def mark_as_read(self, request, pk=None):
+        notification = self.get_object()
+        notification.is_read = True
+        notification.save()
+        return Response({'status': 'marked_read'})
+
+class AuditLogViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = AuditLog.objects.all().select_related('user')
+    serializer_class = AuditLogSerializer
+    permission_classes = [IsStaffOrAdmin]
+
 # ================= FINANCE DASHBOARD VIEW =================
 class FinanceDashboardView(APIView):
     """

@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import AdminLayout from '../layouts/AdminLayout';
 import CustomerLayout from '../layouts/CustomerLayout';
+import WelcomeHome from '../pages/WelcomeHome';
 import Home from '../pages/admin/Home';
 import Customers from '../pages/admin/Customers';
 import Products from '../pages/admin/Products';
@@ -48,8 +49,8 @@ import {
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* Root redirect to Admin Home */}
-      <Route path="/" element={<Navigate to="/admin" replace />} />
+      {/* Welcome Homepage */}
+      <Route path="/" element={<WelcomeHome />} />
 
       {/* Admin / Staff / Finance Layout */}
       <Route path="/admin" element={<AdminLayout />}>

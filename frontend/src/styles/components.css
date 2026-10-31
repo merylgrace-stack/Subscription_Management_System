@@ -246,3 +246,199 @@
     transform: translateY(0) scale(1);
   }
 }
+
+/* ================= ZYLO / ZLURI ENTERPRISE SUITE STYLING ================= */
+
+/* Tab navigation bar */
+.tabs-navigation-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+.tab-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-bottom: 2px solid transparent;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab-nav-btn:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.tab-nav-btn.active {
+  color: var(--accent-primary);
+  border-bottom-color: var(--accent-primary);
+  font-weight: 700;
+}
+
+.tab-badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+}
+
+.tab-nav-btn.active .tab-badge {
+  background-color: var(--accent-primary-glow);
+  color: var(--accent-primary);
+}
+
+/* Pulsing Status Dot */
+.status-dot-pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  box-shadow: 0 0 0 0 rgba(50, 182, 122, 0.7);
+  animation: pulseGreen 2s infinite;
+}
+
+@keyframes pulseGreen {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(50, 182, 122, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(50, 182, 122, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(50, 182, 122, 0);
+  }
+}
+
+/* App Avatar / Vendor Icon */
+.app-avatar-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* License Utilization Bar */
+.utilization-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 130px;
+}
+
+.utilization-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.utilization-track {
+  width: 100%;
+  height: 6px;
+  background-color: var(--bg-input);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.utilization-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.util-fill-high {
+  background: linear-gradient(90deg, #32B67A, #38BDF8);
+}
+
+.util-fill-medium {
+  background: linear-gradient(90deg, #F28C45, #E9AC4B);
+}
+
+.util-fill-low {
+  background: linear-gradient(90deg, #E05B61, #E9AC4B);
+}
+
+/* Renewal Urgency Chips */
+.renewal-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.renewal-chip-urgent {
+  background-color: rgba(224, 91, 97, 0.12);
+  color: #FF6B72;
+  border: 1px solid rgba(224, 91, 97, 0.3);
+}
+
+.renewal-chip-warning {
+  background-color: rgba(233, 172, 75, 0.12);
+  color: #F8B84E;
+  border: 1px solid rgba(233, 172, 75, 0.3);
+}
+
+.renewal-chip-normal {
+  background-color: rgba(139, 124, 246, 0.12);
+  color: #A79BF8;
+  border: 1px solid rgba(139, 124, 246, 0.3);
+}
+
+.renewal-chip-safe {
+  background-color: rgba(50, 182, 122, 0.12);
+  color: #48CA8B;
+  border: 1px solid rgba(50, 182, 122, 0.3);
+}
+
+/* Live Toast Notification */
+.toast-notification {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 420px;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -60,10 +60,17 @@ export const quotationService = {
 export const subscriptionService = {
   getAll: () => api.get('/subscriptions/'),
   getById: (id) => api.get(`/subscriptions/${id}/`),
+  create: (data) => api.post('/subscriptions/', data),
+  update: (id, data) => api.patch(`/subscriptions/${id}/`, data),
   activate: (id) => api.post(`/subscriptions/${id}/activate/`),
   pause: (id, reason) => api.post(`/subscriptions/${id}/pause/`, { reason }),
   resume: (id) => api.post(`/subscriptions/${id}/resume/`),
   cancel: (id, reason) => api.post(`/subscriptions/${id}/cancel/`, { reason }),
+};
+
+export const notificationService = {
+  getAll: () => api.get('/notifications/'),
+  markAsRead: (id) => api.post(`/notifications/${id}/mark_as_read/`),
 };
 
 export const billingService = {

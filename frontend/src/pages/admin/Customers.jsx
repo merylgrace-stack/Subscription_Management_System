@@ -7,6 +7,7 @@ const Customers = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
+  const [toastMsg, setToastMsg] = useState(null);
   const [newCustomer, setNewCustomer] = useState({
     company_name: '',
     contact_name: '',
@@ -15,6 +16,11 @@ const Customers = () => {
     billing_address: '',
     tax_id: '',
   });
+
+  const showToast = (text) => {
+    setToastMsg(text);
+    setTimeout(() => setToastMsg(null), 3500);
+  };
 
   const fetchCustomers = async () => {
     try {
@@ -74,12 +80,14 @@ const Customers = () => {
     e.preventDefault();
     try {
       const code = `CUST-${Math.floor(1000 + Math.random() * 9000)}`;
+      const company = newCustomer.company_name;
       await customerService.create({
         ...newCustomer,
         customer_code: code,
         status: 'ACTIVE',
       });
       setShowAddModal(false);
+      showToast(`Customer "${company}" (${code}) successfully saved to backend!`);
       setNewCustomer({ company_name: '', contact_name: '', email: '', phone: '', billing_address: '', tax_id: '' });
       await fetchCustomers();
     } catch (err) {
@@ -106,6 +114,16 @@ const Customers = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
+      {/* Toast Notification Banner */}
+      {toastMsg && (
+        <div className="toast-notification">
+          <CheckCircle size={18} color="var(--accent-green)" />
+          <span style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: '600' }}>
+            {toastMsg}
+          </span>
+        </div>
+      )}
+
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
