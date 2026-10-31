@@ -1,0 +1,73 @@
+:root {
+  /* Backgrounds */
+  --bg-main: #111318;
+  --bg-secondary: #171B23;
+  --bg-sidebar: #141923;
+  --bg-card: #1C222D;
+  --bg-card-hover: #222937;
+  --bg-elevated: #222A36;
+  --bg-input: #151A22;
+
+  /* Accent Colors */
+  --accent-primary: #F28C45;
+  --accent-primary-hover: #FA9A58;
+  --accent-primary-active: #E07A33;
+  --accent-primary-gradient: linear-gradient(135deg, #F28C45 0%, #E67728 100%);
+  --accent-primary-glow: rgba(242, 140, 69, 0.28);
+  --accent-primary-glow-subtle: rgba(242, 140, 69, 0.12);
+
+  --accent-purple: #8B7CF6;
+  --accent-purple-glow: rgba(139, 124, 246, 0.25);
+  --accent-purple-gradient: linear-gradient(135deg, #8B7CF6 0%, #7563EA 100%);
+
+  --accent-green: #32B67A;
+  --accent-green-glow: rgba(50, 182, 122, 0.25);
+  --accent-green-gradient: linear-gradient(135deg, #32B67A 0%, #259D65 100%);
+
+  --accent-amber: #E9AC4B;
+  --accent-amber-glow: rgba(233, 172, 75, 0.25);
+
+  --accent-danger: #E05B61;
+  --accent-danger-glow: rgba(224, 91, 97, 0.25);
+
+  --accent-blue: #38BDF8;
+
+  /* Typography Colors */
+  --text-primary: #F3F4F6;
+  --text-secondary: #969EAD;
+  --text-muted: #64748B;
+  --text-dark: #0F172A;
+
+  /* Borders */
+  --border-color: #303744;
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(242, 140, 69, 0.6);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+  --shadow-glow-orange: 0 10px 30px rgba(242, 140, 69, 0.3);
+  --shadow-glow-purple: 0 10px 30px rgba(139, 124, 246, 0.25);
+  --shadow-glow-green: 0 10px 30px rgba(50, 182, 122, 0.25);
+
+  /* Spacing */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  /* Fonts */
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Layout */
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 76px;
+  --topbar-height: 70px;
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}

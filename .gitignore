@@ -218,3 +218,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# SQLite Local Databases
+*.sqlite3
+backend/*.sqlite3
+backend/brightloop.sqlite3
+.env
+
+# Ignore node_modules everywhere
+node_modules/
+*/node_modules/
+frontend/node_modules/
+frontend/dist/
+package-lock.json

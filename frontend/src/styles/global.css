@@ -1,0 +1,92 @@
+@import './variables.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  color: var(--text-primary);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px var(--accent-primary-glow);
+}
+
+/* Custom modern scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Ambient background glows for SaaS aesthetic */
+.ambient-glow {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.15;
+}
+
+.glow-top-right {
+  top: -100px;
+  right: -50px;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+}
+
+.glow-bottom-left {
+  bottom: -150px;
+  left: 200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+  opacity: 0.08;
+}
