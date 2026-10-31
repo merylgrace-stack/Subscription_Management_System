@@ -14,15 +14,18 @@ api.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
+  // Always send X-Dev-Role so backend auth bypass works in dev mode
+  let role = 'ADMIN'; // default fallback for unauthenticated demo sessions
   try {
     const userStr = localStorage.getItem('brightloop_user');
     if (userStr) {
       const userObj = JSON.parse(userStr);
       if (userObj?.role) {
-        config.headers['X-Dev-Role'] = userObj.role;
+        role = userObj.role.toUpperCase();
       }
     }
   } catch (e) {}
+  config.headers['X-Dev-Role'] = role;
 
   return config;
 }, (error) => Promise.reject(error));

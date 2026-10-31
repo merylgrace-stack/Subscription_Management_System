@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Layers,
@@ -15,7 +15,10 @@ import {
   Lock,
   ChevronRight,
   Briefcase,
-  FileCheck
+  FileCheck,
+  Play,
+  Video,
+  Link2
 } from 'lucide-react';
 import '../styles/welcome.css';
 import { useAuth } from '../context/AuthContext';
@@ -24,10 +27,51 @@ const WelcomeHome = () => {
   const navigate = useNavigate();
   const { switchRole } = useAuth();
 
+  // Video demo state — paste your YouTube or Loom URL here
+  const [videoUrl, setVideoUrl] = useState('');
+  const [submittedUrl, setSubmittedUrl] = useState('');
+  const [videoError, setVideoError] = useState('');
+
   const handleQuickRole = (role, path) => {
     switchRole(role);
     navigate(path);
   };
+
+  const handleVideoSubmit = (e) => {
+    e.preventDefault();
+    const trimmed = videoUrl.trim();
+    if (!trimmed) {
+      setVideoError('Please enter a video URL.');
+      return;
+    }
+    // Accept YouTube, Loom, or any https:// link
+    const isValid = /^https?:\/\/.+/.test(trimmed);
+    if (!isValid) {
+      setVideoError('Please enter a valid URL starting with https://');
+      return;
+    }
+    setVideoError('');
+    setSubmittedUrl(trimmed);
+    setVideoUrl('');
+  };
+
+  // Convert YouTube watch URL to embed URL
+  const getEmbedUrl = (url) => {
+    if (!url) return '';
+    // Handle youtu.be short links
+    const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+    if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+    // Handle youtube.com/watch?v=
+    const longMatch = url.match(/[?&]v=([a-zA-Z0-9_-]+)/);
+    if (longMatch) return `https://www.youtube.com/embed/${longMatch[1]}`;
+    // Handle Loom
+    const loomMatch = url.match(/loom\.com\/share\/([a-zA-Z0-9]+)/);
+    if (loomMatch) return `https://www.loom.com/embed/${loomMatch[1]}`;
+    // Generic: return as-is (may work for direct mp4 or other embeds)
+    return url;
+  };
+
+  const embedUrl = getEmbedUrl(submittedUrl);
 
   return (
     <div className="welcome-page">
@@ -49,6 +93,7 @@ const WelcomeHome = () => {
         <nav className="welcome-nav-links">
           <a href="#features" className="welcome-nav-link">Platform Capabilities</a>
           <a href="#architecture" className="welcome-nav-link">Billing Engine</a>
+          <a href="#demo" className="welcome-nav-link">Demo Video</a>
           <Link to="/admin/subscriptions" className="welcome-nav-link">Contracts</Link>
           <Link to="/admin/analytics" className="welcome-nav-link">Analytics</Link>
         </nav>
@@ -272,6 +317,94 @@ const WelcomeHome = () => {
         </div>
       </section>
 
+      {/* Video Demo Section */}
+      <section className="welcome-video-section" id="demo">
+        <div className="welcome-video-inner">
+          <div className="features-header" style={{ marginBottom: '2rem' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent-purple)', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
+              <Video size={14} />
+              Product Demo
+            </div>
+            <h2 style={{ fontSize: '2rem', fontWeight: '800', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
+              Watch BrightLoop in Action
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.5rem', maxWidth: '560px', margin: '0.5rem auto 0' }}>
+              Submit your project video link (YouTube, Loom, or direct URL) to showcase your implementation demo.
+            </p>
+          </div>
+
+          {/* Video embed area */}
+          {submittedUrl && embedUrl ? (
+            <div className="video-embed-wrapper">
+              <iframe
+                src={embedUrl}
+                title="BrightLoop Demo Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ width: '100%', height: '100%', borderRadius: 'var(--radius-lg)' }}
+              />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                  Submitted: <span style={{ color: 'var(--accent-green)', fontWeight: '600' }}>{submittedUrl.length > 55 ? submittedUrl.slice(0, 55) + '...' : submittedUrl}</span>
+                </span>
+                <button
+                  onClick={() => { setSubmittedUrl(''); }}
+                  style={{ fontSize: '0.78rem', color: 'var(--accent-primary)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '600' }}
+                >
+                  Change URL
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="video-placeholder-box">
+              <div className="video-play-icon">
+                <Play size={36} color="var(--accent-primary)" />
+              </div>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginTop: '1rem' }}>
+                Submit your demo video link below to preview it here
+              </p>
+            </div>
+          )}
+
+          {/* Video URL Submit Form */}
+          {!submittedUrl && (
+            <form onSubmit={handleVideoSubmit} className="video-submit-form">
+              <div className="video-url-input-group">
+                <Link2 size={16} color="var(--text-muted)" style={{ flexShrink: 0 }} />
+                <input
+                  type="text"
+                  className="video-url-input"
+                  placeholder="Paste your YouTube, Loom, or video URL here..."
+                  value={videoUrl}
+                  onChange={(e) => { setVideoUrl(e.target.value); setVideoError(''); }}
+                />
+                <button type="submit" className="btn-welcome-primary" style={{ flexShrink: 0, padding: '0.6rem 1.25rem', fontSize: '0.88rem' }}>
+                  <Play size={14} />
+                  <span>Submit</span>
+                </button>
+              </div>
+              {videoError && (
+                <p style={{ color: 'var(--accent-error, #F87171)', fontSize: '0.8rem', marginTop: '0.5rem', textAlign: 'center' }}>
+                  {videoError}
+                </p>
+              )}
+              <div style={{ marginTop: '0.75rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                  <CheckCircle size={12} color="var(--accent-green)" /> YouTube supported
+                </span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                  <CheckCircle size={12} color="var(--accent-green)" /> Loom supported
+                </span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                  <CheckCircle size={12} color="var(--accent-green)" /> Direct video link
+                </span>
+              </div>
+            </form>
+          )}
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="welcome-footer">
         <div className="welcome-footer-inner">
@@ -290,6 +423,7 @@ const WelcomeHome = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
             <Link to="/admin" style={{ color: 'inherit' }}>Admin Workspace</Link>
             <Link to="/customer" style={{ color: 'inherit' }}>Customer Portal</Link>
+            <a href="#demo" style={{ color: 'inherit' }}>Demo Video</a>
             <Link to="/admin/audit" style={{ color: 'inherit' }}>Audit Ledger</Link>
             <Link to="/admin/settings" style={{ color: 'inherit' }}>Settings</Link>
           </div>
